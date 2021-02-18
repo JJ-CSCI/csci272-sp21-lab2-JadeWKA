@@ -6,11 +6,63 @@
 
 // Use this enum class for indicating the lat/long direction
 enum class Compass {N, S, W, E};
+double latitude {0.0};
+double longtitude {0.0};
+Compass latitudeDirection;
+Compass longtitudeDirection;
 
+double getLatitude () {
+    return latitude; }
+double getLongtitude () {
+    return longtitude; }
+Compass getLatitudeDirection () {
+    return latitudeDirection; }
+Compass getLongtitudeDirection () {
+    return longtitudeDirection; }
 // Write your code here
+
 class GPS {
+  double latitude;
+  if(latitude<0.0 || latitude>90.0){
+    latitude=latitude.bad;
+  }
+  else if(latitude>=0.0 && latitude<=90.0){
+    return latitude;
+  }
+  enum class latitudeDirection{N,S};
+  enum class longtitudeDirection{W,E};
+  double longtitude;
+  if(longtitude<0.0 || longtitude>180.0){
+    longtitude=longtitude.bad;
+  }
+  else if(longtitude>=0.0 && longtitude<=180.0){
+    return longtitude;
+  }
+   if(latitude==0.0&&longtitude==0.0){
+     return Compass::N;
+     return Compass::W;
+  }
+  else if (latitude==new latitude&&longtitude== new longtitude){
+     return Compass::N;
+     return Compass::W;
+  }
+  else{
+     return Compass::S;
+     return Compass::E;
+  }
+  if(latitude<0.0 || latitude>90.0){
+    return latitude=0.0;
+    return Compass::N;
+  }
+  if(longtitude<0.0 || latitude>180.0){
+    return latitude=0.0;
+   return Compass::W;}
+
+  
 
 };
+
+
 
 //------------------------------
 //   DO NOT MODIFY TEST CASES
@@ -80,4 +132,5 @@ TEST_CASE( "GPS" ) {
         REQUIRE( c.getLongitudeDirection() == Compass::W );
     }
 }
+
 //------------------------------
