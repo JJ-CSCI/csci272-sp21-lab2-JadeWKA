@@ -6,64 +6,89 @@
 
 // Use this enum class for indicating the lat/long direction
 enum class Compass {N, S, W, E};
-double latitude {0.0};
-double longtitude {0.0};
-Compass latitudeDirection;
-Compass longtitudeDirection;
 
-double getLatitude () {
-    return latitude; }
-double getLongtitude () {
-    return longtitude; }
-Compass getLatitudeDirection () {
-    return latitudeDirection; }
-Compass getLongtitudeDirection () {
-    return longtitudeDirection; }
 // Write your code here
-
 class GPS {
-  double latitude;
-  if(latitude<0.0 || latitude>90.0){
-    latitude=latitude.bad;
+private:
+double latitude;
+Compass latitudeDirection;
+double longtitude;
+Compass longitudeDirection;
+
+GPS(double x, double a){
+  if(((x>=0.0)&&(x<=90.0))&&((a>=0.0)&&(x<=180.0))){
+    latitude= x;
+    longtitude=a;
+    latitudeDirection= Compass::N;
+    longitudeDirection= Compass:: W;
   }
-  else if(latitude>=0.0 && latitude<=90.0){
+  else if(((x>0.0)||(x>90.0))&&((a>=0.0)&&(a<=180.0))){
+    latitude=0;
+    latitudeDirection= Compass::N;
+    longtitude=a;
+    longitudeDirection= Compass::W;
+  }
+  else if (((x<0.0)||(x>90.0))&&((a<0.0)||a>180.0))){
+    latitude=0;
+    latitudeDirection=Compass::N;
+    longtitude=0;
+    longtitudeDirection=Compass::W;
+  }
+}
+
+GPS(){
+  longtitude=0;
+  latitude=0;
+  latitudeDirection=Compass::N;
+  longitudeDirection=Compass::W;
+}
+GPS(double x, Compass y, double a, Compass b){
+  latitude=x;
+  latitudeDirection=y;
+  longtitude=a;
+  longitudeDirection=b;
+
+  if (((x>=0.0)&&(x<=90.0))&&((a>=0.0)&&(a<=180.0))){
+    if (((y==Compass::N)||(y==Compass::S))&&((b==Compass::W)||(b==Compass::E))){
+      latitudeDirection=y;
+      longitudeDirection=b;
+    }
+    else if(((y!=Compass::N)&&(y!=Compass::S)&&(b!=Compass::W)||(b!=Compass::E))){
+      latitude=x;
+      longtitude=a;
+    }
+    else if (((x<0.0)||(x>90.0))&&((a>=0.0)&&(a<=180.0))){
+      latitude=0;
+      latitudeDirection=Compass::N;
+      longtitude=a;
+      longtitudeDirection=Compass::W;
+    }
+    else if (((x>=0.0)&&(x<=90.0))&&((a<0.0)||(a>180.0))){
+      latitude=x;
+      latitudeDirection=Compass::N;
+      longtitude=0;
+      longitudeDirection=Compass::W;
+    }
+    else if (((x<0.0)||(x>90.0))&&((a<0.0)||(a>180.0))){
+      latitude=0;
+      latitudeDirection=Compass::N;
+      longitude=0;
+      longitudeDirection=Compass::W;
+    }
+  }
+  double getLatitudeDirection(){
+    return latitudeDirection;
+  }
+  double getLongitudeDirection(){
+    return longtitudeDirection;
+  }
+  double getLatitude(){
     return latitude;
   }
-  enum class latitudeDirection{N,S};
-  enum class longtitudeDirection{W,E};
-  double longtitude;
-  if(longtitude<0.0 || longtitude>180.0){
-    longtitude=longtitude.bad;
-  }
-  else if(longtitude>=0.0 && longtitude<=180.0){
+  double getLongitude(){
     return longtitude;
   }
-   if(latitude==0.0&&longtitude==0.0){
-     return Compass::N;
-     return Compass::W;
-  }
-  else if (latitude==new latitude&&longtitude== new longtitude){
-     return Compass::N;
-     return Compass::W;
-  }
-  else{
-     return Compass::S;
-     return Compass::E;
-  }
-  if(latitude<0.0 || latitude>90.0){
-    return latitude=0.0;
-    return Compass::N;
-  }
-  if(longtitude<0.0 || latitude>180.0){
-    return latitude=0.0;
-   return Compass::W;}
-
-  
-
 };
-
-
-
 //------------------------------
 //   DO NOT MODIFY TEST CASES
 //------------------------------
@@ -132,5 +157,4 @@ TEST_CASE( "GPS" ) {
         REQUIRE( c.getLongitudeDirection() == Compass::W );
     }
 }
-
 //------------------------------
