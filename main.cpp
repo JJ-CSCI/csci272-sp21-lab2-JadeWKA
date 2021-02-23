@@ -59,17 +59,39 @@ class GPS {
       if((o==Compass::N||o==Compass::S)&&(k==Compass::W||k==Compass::E)){
         latitudeDirection=o;
         longitudeDirection=k;
+        latitude=x;
+      longtitude=y;
       }
       else if((o!=Compass::N||o!=Compass::S)&&(k==Compass::W||k==Compass::E)){
         latitudeDirection=Compass::N;
         longitudeDirection=k;
+        latitude=x;
+      longtitude=y;
       }
       else if((o==Compass::N||o==Compass::S)&&(k!=Compass::W||k!=Compass::E)){
         latitudeDirection=o;
         longitudeDirection=Compass::W;
-      }
-      latitude=x;
+        latitude=x;
       longtitude=y;
+      }
+      else if(((lowlat>x||x>hilat))&&(lowlong>y||y>hilong)){
+        latitude=0.0;
+    longtitude=0.0;
+    latitudeDirection=Compass::N;
+    longitudeDirection=Compass::W;
+      }
+      else if(((lowlat>x||x>hilat))&&(lowlong<=y<=hilong)){
+        latitude=0.0;
+    longtitude=y;
+    latitudeDirection=Compass::N;
+    longitudeDirection=Compass::W;
+      }
+      else if(((lowlat<=x<=hilat))&&(lowlong>y||y>hilong)){
+        latitude=x;
+    longtitude=0.0;
+    latitudeDirection=Compass::N;
+    longitudeDirection=Compass::W;
+      }
     }
 
     }
