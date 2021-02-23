@@ -18,55 +18,55 @@ class GPS {
   double lowlong= 0.0;
   double hilong= 180.0;
   Compass latitudeDirection;
-  Compass longtitudeDirection;
+  Compass longitudeDirection;
 
-  
+  public:
 
   GPS(double a, double b){
     if(((lowlat<=a<=hilat))&&(lowlong<=b<=hilong)){
       latitude=0.0;
       longtitude=0.0;
       latitudeDirection=Compass::N;
-      longtitudeDirection=Compass::W;
+      longitudeDirection=Compass::W;
     }
     else if (((lowlat>a)||(a>hilat))&&((lowlong<=b<=hilong))){
       latitude=0.0;
       longtitude=b;
       latitudeDirection=Compass::N;
-      longtitudeDirection=Compass::W;
+      longitudeDirection=Compass::W;
     }
     else if(((lowlat<=a<=hilat))&&((lowlong>b)||(hilong<b))){
       latitude=a;
       longtitude=0.0;
       latitudeDirection=Compass::N;
-      longtitudeDirection=Compass::W;
+      longitudeDirection=Compass::W;
     }
     else if(((lowlat>a)||(a>hilat))&&((lowlong>b)||(hilong<b))){
       latitude=0.0;
       longtitude=0.0;
       latitudeDirection=Compass::N;
-      longtitudeDirection=Compass::W;
+      longitudeDirection=Compass::W;
     }
     }
 
-    GPS(double x, double y, Compass o, Compass k){
+    GPS(double x, Compass o, double y, Compass k){
       latitude=x,
       longtitude=y;
       latitudeDirection=o;
-      longtitudeDirection=k;
+      longitudeDirection=k;
 
       if(((lowlat<=x<=hilat))&&(lowlong<=y<=hilong)){
       if((o==Compass::N||o==Compass::S)&&(k==Compass::W||k==Compass::E)){
         latitudeDirection=o;
-        longtitudeDirection=k;
+        longitudeDirection=k;
       }
       else if((o!=Compass::N||o!=Compass::S)&&(k==Compass::W||k==Compass::E)){
         latitudeDirection=Compass::N;
-        longtitudeDirection=k;
+        longitudeDirection=k;
       }
       else if((o==Compass::N||o==Compass::S)&&(k!=Compass::W||k!=Compass::E)){
         latitudeDirection=o;
-        longtitudeDirection=Compass::W;
+        longitudeDirection=Compass::W;
       }
       latitude=x;
       longtitude=y;
@@ -76,26 +76,24 @@ class GPS {
   double getLatitude(){
     return latitude;
   }
-  double getLongtitude(){
+  double getLongitude(){
     return longtitude;
   }
   Compass getLatitudeDirection(){
     return latitudeDirection;
   }
-  Compass getLongtitudeDirection(){
-    return longtitudeDirection;
+  Compass getLongitudeDirection(){
+    return longitudeDirection;
   }
 
   GPS(){
     latitude=0.0;
     longtitude=0.0;
     latitudeDirection=Compass::N;
-    longtitudeDirection=Compass::W;
+    longitudeDirection=Compass::W;
   }
   
 };
-
-
 //------------------------------
 //   DO NOT MODIFY TEST CASES
 //------------------------------
