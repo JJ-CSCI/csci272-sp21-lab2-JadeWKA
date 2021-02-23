@@ -19,11 +19,10 @@ class GPS{
 
   public:
 
-  GPS()
-  {latitude=0.0;
-  longitude=0.0;
-  latitudeDirection=Compass::N;
-  longitudeDirection=Compass::W;};
+  GPS(): latitude{0.0}, 
+  latitudeDirection{Compass::N},longitude{0.0},
+  longitudeDirection{Compass::W}{}
+
   GPS(double lat, double lon)
   {latitude=lat;
   longitude=lon;
@@ -43,11 +42,12 @@ class GPS{
     else{
       longitude=0.0;
     }
+    latitudeDirection=Compass::N;
+    longitudeDirection=Compass::W;
   
   };
   GPS(double lat, Compass latd, double lon, Compass lond)
   {
-
      if((0.0<=lat)&&(lat<=90.0)){
       latitude=lat;
     }
@@ -62,8 +62,6 @@ class GPS{
       longitude=0.0;
     }
     
-  latitude=lat;
-  longitude=lon;
   if(latd==Compass::N || latd==Compass::S){
     latitudeDirection=latd;}
   else
