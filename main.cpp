@@ -7,88 +7,95 @@
 // Use this enum class for indicating the lat/long direction
 enum class Compass {N, S, W, E};
 
+
 // Write your code here
 class GPS {
-private:
-double latitude;
-Compass latitudeDirection;
-double longtitude;
-Compass longitudeDirection;
+  private:
+  double latitude;
+  double longtitude;
+  double lowlat = 0.0;
+  double hilat= 90.0;
+  double lowlong= 0.0;
+  double hilong= 180.0;
+  Compass latitudeDirection;
+  Compass longtitudeDirection;
 
-GPS(double x, double a){
-  if(((x>=0.0)&&(x<=90.0))&&((a>=0.0)&&(x<=180.0))){
-    latitude= x;
-    longtitude=a;
-    latitudeDirection= Compass::N;
-    longitudeDirection= Compass:: W;
-  }
-  else if(((x>0.0)||(x>90.0))&&((a>=0.0)&&(a<=180.0))){
-    latitude=0;
-    latitudeDirection= Compass::N;
-    longtitude=a;
-    longitudeDirection= Compass::W;
-  }
-  else if (((x<0.0)||(x>90.0))&&((a<0.0)||a>180.0))){
-    latitude=0;
-    latitudeDirection=Compass::N;
-    longtitude=0;
-    longtitudeDirection=Compass::W;
-  }
-}
+  
 
-GPS(){
-  longtitude=0;
-  latitude=0;
-  latitudeDirection=Compass::N;
-  longitudeDirection=Compass::W;
-}
-GPS(double x, Compass y, double a, Compass b){
-  latitude=x;
-  latitudeDirection=y;
-  longtitude=a;
-  longitudeDirection=b;
-
-  if (((x>=0.0)&&(x<=90.0))&&((a>=0.0)&&(a<=180.0))){
-    if (((y==Compass::N)||(y==Compass::S))&&((b==Compass::W)||(b==Compass::E))){
-      latitudeDirection=y;
-      longitudeDirection=b;
-    }
-    else if(((y!=Compass::N)&&(y!=Compass::S)&&(b!=Compass::W)||(b!=Compass::E))){
-      latitude=x;
-      longtitude=a;
-    }
-    else if (((x<0.0)||(x>90.0))&&((a>=0.0)&&(a<=180.0))){
-      latitude=0;
+  GPS(double a, double b){
+    if(((lowlat<=a<=hilat))&&(lowlong<=b<=hilong)){
+      latitude=0.0;
+      longtitude=0.0;
       latitudeDirection=Compass::N;
-      longtitude=a;
       longtitudeDirection=Compass::W;
     }
-    else if (((x>=0.0)&&(x<=90.0))&&((a<0.0)||(a>180.0))){
+    else if (((lowlat>a)||(a>hilat))&&((lowlong<=b<=hilong))){
+      latitude=0.0;
+      longtitude=b;
+      latitudeDirection=Compass::N;
+      longtitudeDirection=Compass::W;
+    }
+    else if(((lowlat<=a<=hilat))&&((lowlong>b)||(hilong<b))){
+      latitude=a;
+      longtitude=0.0;
+      latitudeDirection=Compass::N;
+      longtitudeDirection=Compass::W;
+    }
+    else if(((lowlat>a)||(a>hilat))&&((lowlong>b)||(hilong<b))){
+      latitude=0.0;
+      longtitude=0.0;
+      latitudeDirection=Compass::N;
+      longtitudeDirection=Compass::W;
+    }
+    }
+
+    GPS(double x, double y, Compass o, Compass k){
+      latitude=x,
+      longtitude=y;
+      latitudeDirection=o;
+      longtitudeDirection=k;
+
+      if(((lowlat<=x<=hilat))&&(lowlong<=y<=hilong)){
+      if((o==Compass::N||o==Compass::S)&&(k==Compass::W||k==Compass::E)){
+        latitudeDirection=o;
+        longtitudeDirection=k;
+      }
+      else if((o!=Compass::N||o!=Compass::S)&&(k==Compass::W||k==Compass::E)){
+        latitudeDirection=Compass::N;
+        longtitudeDirection=k;
+      }
+      else if((o==Compass::N||o==Compass::S)&&(k!=Compass::W||k!=Compass::E)){
+        latitudeDirection=o;
+        longtitudeDirection=Compass::W;
+      }
       latitude=x;
-      latitudeDirection=Compass::N;
-      longtitude=0;
-      longitudeDirection=Compass::W;
+      longtitude=y;
     }
-    else if (((x<0.0)||(x>90.0))&&((a<0.0)||(a>180.0))){
-      latitude=0;
-      latitudeDirection=Compass::N;
-      longitude=0;
-      longitudeDirection=Compass::W;
+
     }
-  }
-  double getLatitudeDirection(){
-    return latitudeDirection;
-  }
-  double getLongitudeDirection(){
-    return longtitudeDirection;
-  }
   double getLatitude(){
     return latitude;
   }
-  double getLongitude(){
+  double getLongtitude(){
     return longtitude;
   }
+  Compass getLatitudeDirection(){
+    return latitudeDirection;
+  }
+  Compass getLongtitudeDirection(){
+    return longtitudeDirection;
+  }
+
+  GPS(){
+    latitude=0.0;
+    longtitude=0.0;
+    latitudeDirection=Compass::N;
+    longtitudeDirection=Compass::W;
+  }
+  
 };
+
+
 //------------------------------
 //   DO NOT MODIFY TEST CASES
 //------------------------------
